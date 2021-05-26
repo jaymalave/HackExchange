@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+   
+<div class="index">
+        {%if current_user.is_authenticated%}
+
+        <h2>Welcome Aboard!</h2>
+
+        <h2><a class = "explore" href = "{{ url_for('explore')}}">Explore</a></h2>
+
+        <div class="personal">
+            <div class="postaproj"><a class = "postit"href = "{{ url_for('new_post')}}">Post a Project</a></div>
+            <div class="viewaproj"><a class = "viewit" href = "{{ url_for('user_posts', username=current_user.username) }}">View your Projects</a></div>
+        </div>
+
+      {%else%}
+        
+        <h2>127.0.0.1 for all the coders</h2>
+
+        <h3>Flaunt your coding projects, connect to the developers around the world.</h3>
+        <h4>Hack Exchange provides you a platform where you can showcase your projects to the world.</h4>
+        <h5>This will also help you connect to the programmers all over the globe.</h5>
+        <h6><a class = "get" href = "{{ url_for('register')}}">Get Started!</a></h6>
+
+        </div>
+         
+        
+       {%endif%}
+       {% endblock content %}

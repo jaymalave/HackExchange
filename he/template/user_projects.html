@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+        <style>
+
+            body {
+                background-color: #404040;
+            }
+            h1 {
+                text-align: center;
+                margin-top: 20px;
+                color: aliceblue;
+            }
+
+            img {
+                height: 50px;
+                width: 50px;
+            }
+
+            a {
+               text-decoration: none;
+               color: blanchedalmond;
+            }
+
+            a:hover {
+                text-decoration: none;
+                color: white;
+            }
+
+            .content {
+                position: fixed;
+                top: 150px;
+                left: 100px;
+                color: blanchedalmond;
+                width: 90%;
+            }
+
+             #user {
+                color: aliceblue;
+            }
+
+            hr {
+                color: aliceblue;
+                display: block;
+                margin: 10px;
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+                margin-left: auto;
+                margin-right: auto;
+                border-style: inset;
+                height: 5px;
+
+            }
+
+            .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #404040;
+}
+
+.home {
+    color: blanchedalmond;
+    position: fixed;
+    top: 20px;
+    left: 50px;
+}
+
+
+
+        </style>
+    </head>
+    <body>
+
+      <div class="home">
+        <a href="{{ url_for('home')}}"><h2>Hack Exchange</h2></a>
+       </div>
+
+        <h1 class="mb-3">Projects by {{ user.username }} ({{ posts.total }})</h1>
+        <div class="content">
+        {% for post in posts.items %}
+        <div class="card">
+            <article class="media content-section">
+            
+              <div class="media-body">
+                <div class="article-metadata">
+                  <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+                  <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}" id = "user">&nbsp;&nbsp;&nbsp;{{ post.author.username }}</a>
+                  <small class="text-info">{{ post.date_posted.strftime("%d/%m/%Y, %H:%M") }}</small>
+                </div>
+                <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">&nbsp;&nbsp;&nbsp;{{ post.title }}</a></h2>
+                
+              </div>
+            </article>
+            </div>
+            <hr>
+        {% endfor %}
+        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+            {% if posts.page == page_num %}
+              <a class="btn btn-dark mb-4" href="{{ url_for('user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+              <a class="btn btn-outline-dark mb-4" href="{{ url_for('user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+
+          
+        </div>
+    </body>
+    </html>

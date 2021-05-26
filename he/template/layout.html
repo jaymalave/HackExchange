@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <title>Hack Exchange</title>
+    <style>
+        h1 {
+    color: blanchedalmond;
+}
+
+body {
+    background-color: #404040;
+}
+
+.index {
+    position: relative;
+    top: 300px;
+}
+
+h2 {
+    position: fixed;
+    top: 130px;
+    left: 35%;
+    color: blanchedalmond;
+    font-family: monospace;
+}
+
+img {
+    height: 40px;
+    width: 40px;
+}
+
+.navbar-brand  {
+    font-size: 30px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  
+}
+
+a {
+    color: blanchedalmond;
+}
+
+
+
+.nameli {
+   margin-top: 5px;
+   font-size: 40px;
+}
+
+
+
+
+a:hover{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        
+           <ul>
+          
+           <li class = "nameli"> <a href="/"><img src = "{{ url_for('static', filename='webdevt.png') }}">Hack Exchange</a></li>
+
+            
+                {% if current_user.is_authenticated %}
+                
+                 <li style = "float: right" class = "opt"><a href="{{ url_for('account') }}">Account</a></li>
+                    <li style = "float: right" class = "opt"><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                <li style = "float: right" class = "opt"><a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a></li>
+                    <li style = "float: right" class = "opt"><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+              
+      </header>
+      <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+        </main>
+          
+    <p class = "love">Made with  &nbsp;❤️&nbsp; by Jay Malave</p>
+</body>
+</html>

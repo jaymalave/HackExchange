@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+            body {
+                background-color: #404040;
+            }
+
+             p {
+                color: blanchedalmond;
+            }
+
+            .article-title {
+                color: blanchedalmond;
+            }
+ 
+           a {
+               color: blanchedalmond;
+           }
+
+           a:hover {
+               text-decoration: none;
+               color: aliceblue;
+           }
+
+           #auth {
+             color: aliceblue;
+           }
+
+           img {
+               height: 50px;
+               width: 50px;
+           }
+
+           .projectli {
+               position: fixed;
+               top: 100px;
+               left:100px;
+               width: 80%;
+           }
+
+           h1 {
+               color: azure;
+               text-align: center;
+               margin-top: 20px;
+           }
+           hr {
+                border-top: 0.1px inset #404040;
+                margin: 20px;
+                width: 100%;
+            }
+
+            .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #404040;
+}
+
+.home {
+    color: blanchedalmond;
+    position: fixed;
+    top: 20px;
+    left: 50px;
+}
+
+
+             
+
+        </style>
+    </head>
+    <body>
+
+      <div class="home">
+       <a href="{{ url_for('home')}}"><h2><img src="static/webdevt.png" alt="HackExchange Logo">Hack Exchange</h2></a>
+      </div>
+      
+        <h1>Explore</h1>
+
+
+        <div class="projectli">
+        {% for post in posts.items %}
+        <div class="card">
+        <article class="media content-section">
+          
+          <div class="media-body">
+            <div class="article-metadata">
+              <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+              <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}" id = "auth">{{ post.author.username }}</a>
+              <small class="text-info">{{ post.date_posted.strftime("%d/%m/%Y, %H:%M") }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            
+          </div>
+        </article>
+        </div>
+        <hr>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if posts.page == page_num %}
+          <a class="btn btn-dark mb-4" href="{{ url_for('explore', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-dark-outline mb-4" href="{{ url_for('explore', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    </div>
+    </body>
+</html>

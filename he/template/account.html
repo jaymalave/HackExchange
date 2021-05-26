@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+
+            body {
+                background-color: #404040;
+            }
+          .form-group, .form-check {
+       width: 70%;
+       position: relative;
+       left: 100px;
+       color: blanchedalmond;
+   }
+
+     .media {
+         margin-top: 50px;
+        width: 70%;
+       position: relative;
+       left: 200px;
+     }
+
+          img {
+              height: 120px;
+              width: 120px;
+          }
+          #finBtn {
+       position: relative;
+       left: 200px;
+   }
+    
+     .account-heading {
+         position: fixed;
+         top: 80px;
+         left: 350px;
+         color: aliceblue;
+     }
+     .text-secondary {
+         position: fixed;
+         top: 120px;
+         left: 355px;
+     }
+
+     .backhome {
+         position: fixed;
+         bottom: 30%;
+         left: 20%;
+     }
+
+     a {
+         text-decoration: none;
+         color: white;
+     }
+
+     a:hover {
+         text-decoration: none;
+         color: azure;
+     }
+
+
+
+     </style>
+    </head>
+    <body>
+        
+        <div class="content-section">
+            <div class="media">
+              <img class="rounded-circle account-img" src="{{ image_file }}">
+              <div class="media-body">
+                <h2 class="account-heading">&nbsp;&nbsp;{{ current_user.username }}</h2>
+                <p class="text-secondary">&nbsp;&nbsp;{{ current_user.email }}</p>
+              </div>
+            </div>
+              <form method="POST" action="" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }}
+                  <fieldset class="form-group">
+                      <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User Profile</h1>
+                      <div class="form-group">
+                          {{ form.username.label(class="form-control-label") }}
+      
+                          {% if form.username.errors %}
+                              {{ form.username(class="form-control form-control-lg is-invalid") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.username.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.username(class="form-control form-control-lg") }}
+                          {% endif %}
+                      </div>
+                      <div class="form-group">
+                          {{ form.email.label(class="form-control-label") }}
+                          {% if form.email.errors %}
+                              {{ form.email(class="form-control form-control-lg is-invalid") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.email.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.email(class="form-control form-control-lg") }}
+                          {% endif %}
+                      </div>
+                      <div class="form-group">
+                          {{ form.picture.label('Profile Picture') }}
+                          {{ form.picture(class="form-control-file") }}
+                          {% if form.picture.errors %}
+                              {% for error in form.picture.errors %}
+                                  <span class="text-danger">{{ error }}</span></br>
+                              {% endfor %}
+                          {% endif %}
+                      </div>
+                  </fieldset>
+                  
+                  <div class="form-group" id = "finBtn">
+                      {{ form.submit(class="btn btn-dark") }}
+                  </div>
+              </form>
+          </div>
+          <div class="backhome">
+          <button class = "btn btn-dark"><a href="{{url_for('home')}}">Back to Home</a></button>
+          </div>
+    </body>
+</html>

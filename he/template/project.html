@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+
+            body {
+                background-color: #404040;
+            }
+            .postuser {
+                position: fixed;
+                top: 100px;
+                left: 50px;
+            }
+
+            img {
+                height: 50px;
+                width: 50px;
+            }
+
+
+            .article-title, .article-content {
+                color: blanchedalmond;
+            }
+
+            #auth {
+                color: aliceblue;
+                text-decoration: none;
+            }
+
+            .delete {
+              position: fixed;
+              top: 105px;
+              left: 390px;
+              
+              
+            }
+        </style>
+    </head>
+    <body>
+        <div class="postuser">
+        <article class="media content-section">
+            
+            <div class="media-body">
+              <div class="article-metadata">
+                <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+                <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}" id = "auth">&nbsp;&nbsp;{{ post.author.username }}</a>
+                <small class="text-info">&nbsp;&nbsp;{{ post.date_posted.strftime("%d/%m/%Y, %H:%M") }}</small>
+                {% if post.author == current_user %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+                <div class="delete">
+                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST" class = "del">
+                  <input class="btn btn-danger btn-sm m-1" type="submit" value="Delete">
+                </form>
+                </div>
+                {% endif %}
+              </div>
+           
+                  
+              <h2 class="article-title">&nbsp;&nbsp;{{ post.title }}</h2>
+              <p class="article-content">&nbsp;&nbsp;{{ post.content }}</p>
+            </div>
+          </article>
+
+    </body>
+</html>
